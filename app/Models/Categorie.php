@@ -16,4 +16,8 @@ class Categorie extends Model
     public function ressource(){
         return $this->hasMany(Ressource::class);
     }
+
+    protected $fillable =[
+        'titre'
+    ];
 }

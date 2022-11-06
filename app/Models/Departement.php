@@ -23,4 +23,8 @@ class Departement extends Model
     public function ressource(){
         return $this->hasMany(Ressource::class);
     }
+
+    protected $fillable =[
+        'nomDepartement'
+    ];
 }

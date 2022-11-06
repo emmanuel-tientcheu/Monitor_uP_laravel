@@ -61,6 +61,9 @@ class UserController extends Controller
         }
         $user = User::find($id);
         $user->update($request->all());
+        if(is_null($user)){
+            return response()->json(['message' => 'utilisateur  est introuvable'],404);
+        }
         return  response()->json([
             'message'=>'utilisateur modifié',
             'data'=>$user
@@ -70,10 +73,10 @@ class UserController extends Controller
     public function deleteUser($id){
         $user = User::find($id);
         if(is_null($user)){
-            return response()->json(['message' => 'utilisateur supprimé'],404);
+            return response()->json(['message' => 'utilisateur  est introuvable'],404);
         }
-        $user->delete();
-        return response()->json('utilisateur supprimé');
+        $user->delete($id);
+        return response()->json('utilisateur supprimé',200);
 
     }
 }

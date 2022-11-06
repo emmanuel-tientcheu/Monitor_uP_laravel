@@ -22,4 +22,12 @@ class Ressource extends Model
     public function categorie(){
         return $this->belongsTo(Categorie::class);
     }
+
+    protected $fillable = [
+        'id_departement',
+        'id_categorie',
+        'isDisponible',
+        'nom',
+        'description'
+    ];
 }
