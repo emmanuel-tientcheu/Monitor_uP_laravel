@@ -23,6 +23,13 @@ class Ressource extends Model
         return $this->belongsTo(Categorie::class);
     }
 
+    /*
+     *une ressource a une ou plusieurs image
+     */
+    public function media(){
+        return $this->hasMany(Media::class);
+    }
+
     protected $fillable = [
         'id_departement',
         'id_categorie',
