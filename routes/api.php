@@ -7,6 +7,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,10 @@ Route::get('roles/{id}',[RoleController::class,'getRole']);
 Route::post('roles',[RoleController::class,'addRole']);
 Route::put('roles/{id}',[RoleController::class,'updateRole']);
 Route::delete('roles/{id}',[RoleController::class,'deleteRole']);
+
+//medias
+Route::get('medias',[MediaController::class,'getMedias']);
+Route::get('medias/{id}',[MediaController::class,'getMedia']);
+Route::post('medias',[MediaController::class,'addMedia']);
+Route::put('medias/{id}',[MediaController::class,'updateMedia']);
+Route::delete('medias/{id}',[MediaController::class,'deleteMedia']);

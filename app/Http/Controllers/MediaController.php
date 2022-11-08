@@ -35,13 +35,15 @@ class MediaController extends Controller
 
     public function addMedia(Request $request){
         
-        $req->validate([
+        $request->validate([
             'id_ressource'=>'required|integer',
-            'file.*' => 'mimes:jpeg,jpg,png|max:2048'
+            'file.*' => 'mimes:jpeg,jpg,png|max:5048'
         ]);
 
-        if($rep->hasfile('file')){
-            $file = $rep->file('file');
+        if($request->hasfile('file')){
+            foreach($request->file('file') as $file)
+          { 
+            // $file = $request->file('file');
             $fileName = time().'_'.$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $filePath = $file->storeAs('images', $fileName, 'public');
@@ -50,16 +52,16 @@ class MediaController extends Controller
 
             $fileModal->fileName = ($fileName);
             $fileModal->filePath = ($filePath);
-            $fileModal->extension = ($extension);
+        //    $fileModal->extension = ($extension);
             $fileModal->id_ressource = $request->id_ressource;
 
             $fileModal->save();
-
-            return response()->json([
-                "success" => true,
-                "message" => "File successfully uploaded",
-                "file" => $req->file,
-            ]);
+        }
+        return response()->json([
+            "success" => true,
+            "message" => "File successfully uploaded",
+            "file" => $request->file,
+        ]);
         }
     }
 
@@ -68,12 +70,10 @@ class MediaController extends Controller
         if(is_null($media)){
             return response()->json(['message' => 'le media nexiste pas'],404);
         }
-
-        $validator=Validator::make($request->all(),[
-            'file'=>'required|mimes:png,jpeg',
+         $request->validate([
             'id_ressource'=>'required|integer',
+            'file.*' => 'mimes:jpeg,jpg,png|max:5048'
         ]);
-      
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
@@ -88,16 +88,16 @@ class MediaController extends Controller
         }
         $media->update($request->except('file'));
         return response()->json(['success' => true, 'message' => 'Partner updated successfully!', 
-        'updated_data' => $found], 200);
+        'updated_data' => $media], 200);
     }
 
     public function deleteMedia($id){
-        $media = Media::find($id);
-        if(is_null($media)){
-            return response()->json(['message' => 'image introuvable'],404);
-        }
-        $media->delete();
-        return response()->json('la photo a ete supprimé');
+       $files = Media::findOrFail($id);
+       if(Media::exists(public_path("storage/images".$files->fileName))){
+        File::delete(public_path("storage/images".$files->fileName));
+        Media::find($id)->delete();
+        return response()->json(['success' => true, 'message' => 'fichier bien supprimé'],200);
+       } 
     }
 
     public function searchFile($id){
