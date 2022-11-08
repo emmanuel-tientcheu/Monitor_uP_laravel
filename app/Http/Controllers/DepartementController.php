@@ -45,7 +45,7 @@ class DepartementController extends Controller
         ],200);
     }
 
-    public function updateUser(Request $request, $id){
+    public function updateDepartement(Request $request, $id){
         $validator = Validator::make($request->all(),[
             'nomDepartement'=>'required|string',
         ]);

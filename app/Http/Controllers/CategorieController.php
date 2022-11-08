@@ -35,7 +35,7 @@ class CategorieController extends Controller
             'titre'=>'required|string|between:2,100',
         ]);
 
-        if(validator($request->fails())){
+        if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -51,11 +51,11 @@ class CategorieController extends Controller
             'titre'=>'required|string|between:2,100',
         ]);
 
-        if(($request->fails())){
+        if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
         $categorie = Categorie::find($id);
-        if(is_null($categories)){
+        if(is_null($categorie)){
             return response()->json([
                 'message'=>'la categorie n existe pas',
             ],404);
@@ -63,13 +63,13 @@ class CategorieController extends Controller
         $categorie->update($request->all());
         return response()->json([
             'messsage'=>'categorie modifié',
-            'data'=>$categories,
+            'data'=>$categorie,
         ],200);
     }
 
     public function deleCategorie($id){
         $categorie = Categorie::find($id);
-        if(is_null($categories)){
+        if(is_null($categorie)){
             return response()->json([
                 'message'=>'la categorie n existe pas',
             ],404);

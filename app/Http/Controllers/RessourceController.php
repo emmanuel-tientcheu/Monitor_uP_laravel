@@ -37,7 +37,7 @@ class RessourceController extends Controller
             'id_departement'=>'required',
             'id_categorie'=>'required',
             'isDisponible'=>'required|boolean',
-            'name'=>'required|string',
+            'nom'=>'required|string',
             'description'=>'required|string',
         ]);
 
@@ -57,7 +57,7 @@ class RessourceController extends Controller
             'id_departement'=>'required',
             'id_categorie'=>'required',
             'isDisponible'=>'required|boolean',
-            'name'=>'required|string',
+            'nom'=>'required|string',
             'description'=>'required|string',
         ]);
 
